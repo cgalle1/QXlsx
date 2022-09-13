@@ -2704,50 +2704,52 @@ void WorksheetPrivate::loadXmlSheetFormatProps(QXmlStreamReader &reader)
 {
 	Q_ASSERT(reader.name() == QLatin1String("sheetFormatPr"));
 
-    const QXmlStreamAttributes attributes = reader.attributes();
+    QXmlStreamAttributes attributes = reader.attributes();
 	XlsxSheetFormatProps formatProps;
     bool isSetWidth = false;
 
     // Retain default values
-    for  (const QXmlStreamAttribute &attrib : attributes)
-    {
-        if(attrib.name() == QLatin1String("baseColWidth") )
+	for (size_t i =0; i< attributes.size();++i)
+	{
+		auto name = attributes[i].name();
+		auto val = attributes[i].value();
+        if(name == QLatin1String("baseColWidth") )
         {
-			formatProps.baseColWidth = attrib.value().toInt();
+			formatProps.baseColWidth = val.toInt();
         }
-        else if(attrib.name() == QLatin1String("customHeight"))
+        else if(name == QLatin1String("customHeight"))
         {
-			formatProps.customHeight = attrib.value() == QLatin1String("1");
+			formatProps.customHeight = val == QLatin1String("1");
         }
-        else if(attrib.name() == QLatin1String("defaultColWidth"))
+        else if(name == QLatin1String("defaultColWidth"))
         {
-            double dDefaultColWidth = attrib.value().toDouble();
+            double dDefaultColWidth = val.toDouble();
             formatProps.defaultColWidth = dDefaultColWidth;
             isSetWidth = true;
         }
-        else if(attrib.name() == QLatin1String("defaultRowHeight"))
+        else if(name == QLatin1String("defaultRowHeight"))
         {
-			formatProps.defaultRowHeight = attrib.value().toDouble();
+			formatProps.defaultRowHeight = val.toDouble();
         }
-        else if(attrib.name() == QLatin1String("outlineLevelCol"))
+        else if(name == QLatin1String("outlineLevelCol"))
         {
-			formatProps.outlineLevelCol = attrib.value().toInt();
+			formatProps.outlineLevelCol = val.toInt();
         }
-        else if(attrib.name() == QLatin1String("outlineLevelRow"))
+        else if(name == QLatin1String("outlineLevelRow"))
         {
-			formatProps.outlineLevelRow = attrib.value().toInt();
+			formatProps.outlineLevelRow = val.toInt();
         }
-        else if(attrib.name() == QLatin1String("thickBottom"))
+        else if(name == QLatin1String("thickBottom"))
         {
-			formatProps.thickBottom = attrib.value() == QLatin1String("1");
+			formatProps.thickBottom = val == QLatin1String("1");
         }
-        else if(attrib.name() == QLatin1String("thickTop"))
+        else if(name == QLatin1String("thickTop"))
         {
-			formatProps.thickTop  = attrib.value() == QLatin1String("1");
+			formatProps.thickTop  = val == QLatin1String("1");
         }
-        else if(attrib.name() == QLatin1String("zeroHeight"))
+        else if(name == QLatin1String("zeroHeight"))
         {
-			formatProps.zeroHeight = attrib.value() == QLatin1String("1");
+			formatProps.zeroHeight = val == QLatin1String("1");
 		}
 	}
 

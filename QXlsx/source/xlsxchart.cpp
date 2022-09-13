@@ -2250,9 +2250,10 @@ QString ChartPrivate::readSubTree(QXmlStreamReader &reader)
 
             treeString += QLatin1String("<") + reader.qualifiedName().toString();
 
-            const QXmlStreamAttributes attributes = reader.attributes();
-            for (const QXmlStreamAttribute &attr : attributes) {
-                treeString += QLatin1String(" ") + attr.name().toString() + QLatin1String("=\"") + attr.value().toString() + QLatin1String("\"");
+            QXmlStreamAttributes attributes = reader.attributes();
+            for (size_t i = 0; i < attributes.size(); ++i)
+            {
+                treeString += QLatin1String(" ") + attributes[i].name().toString() + QLatin1String("=\"") + attributes[i].value().toString() + QLatin1String("\"");
             }
             treeString += QStringLiteral(">");
         }
